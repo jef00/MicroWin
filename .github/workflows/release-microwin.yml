@@ -1,7 +1,7 @@
 name: Pre-Release MicroWin
 
 on:
-  workflow_dispatch: # Manual trigger
+  workflow_dispatch:
 
 jobs:
   build-and-pre-release:
@@ -13,19 +13,25 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Essential for auto-generating release notes from history
+          fetch-depth: 0
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.0.x'
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
 
-      # 2. Build the Main MicroWin App
-      - name: Build Main MicroWin App
+      - name: Setup NuGet
+        uses: nuget/setup-nuget@v2
+
+      - name: Restore NuGet packages
+        run: nuget restore MicroWin.slnx
+
+      - name: Build MicroWin
         run: |
-          dotnet publish -c Release -o ./build-microwin -r win-x64 --self-contained true -p:PublishSingleFile=true
+          msbuild MicroWin.slnx /p:Configuration=Release /p:Platform="Any CPU"
 
-      # 3. Create Pre-Release and Upload Assets
+      - name: Find and display build output
+        run: |
+          Get-ChildItem -Path . -Recurse -Filter "MicroWin.exe" | ForEach-Object { $_.FullName }
+
       - name: Create GitHub Pre-Release
         uses: softprops/action-gh-release@v2
         with:
@@ -33,6 +39,6 @@ jobs:
           name: MicroWin Alpha v0.${{ github.run_number }}
           generate_release_notes: true
           draft: false
-          prerelease: true # This marks the release with the "Pre-release" badge on GitHub
+          prerelease: true
           files: |
-            ./build-microwin/MicroWin.exe
+            ./MicroWin/bin/Release/MicroWin.exe
