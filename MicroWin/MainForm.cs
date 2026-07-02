@@ -650,6 +650,24 @@ namespace MicroWin
                                 await downloadStream.CopyToAsync(fileStream);
                             }
                         }
+
+                        await Task.Run(() =>
+                        {
+                            var iso = new IsoManager();
+
+                            char? drive = iso.MountAndGetDrive(outputPath);
+                            if (drive != '\0')
+                            {
+                                string extractvirtio = Path.Combine(AppState.MountPath, "virtio")
+                                iso.ExtractIso(drive?.ToString(), extractvirtio, (p) =>
+                                {
+                                }, (file) =>
+                                {
+                                });
+                                InvokeFileProgressUIUpdate("");
+                                iso.Dismount(outputPath);
+                            }
+                        });
                     }
                 }
                 UpdateCurrentProgressBar(10);
