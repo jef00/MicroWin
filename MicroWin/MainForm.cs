@@ -637,12 +637,10 @@ namespace MicroWin
                                 isRedirect = false;
                             }
                         }
-
+                        string outputPath = Path.Combine(AppState.ScratchPath, "virtio-win.iso");
                         using (downloadResponse)
                         {
                             downloadResponse.EnsureSuccessStatusCode();
-
-                            string outputPath = Path.Combine(AppState.ScratchPath, "virtio-win.iso");
 
                             using (var downloadStream = await downloadResponse.Content.ReadAsStreamAsync())
                             using (var fileStream = new FileStream(outputPath, FileMode.Create, FileAccess.Write, FileShare.None, 8192, true))
