@@ -658,7 +658,8 @@ namespace MicroWin
                             char? drive = iso.MountAndGetDrive(outputPath);
                             if (drive != '\0')
                             {
-                                string extractvirtio = Path.Combine(AppState.MountPath, "virtio")
+                                string extractvirtio = Path.Combine(AppState.MountPath, "virtio");
+
                                 iso.ExtractIso(drive?.ToString(), extractvirtio, (p) =>
                                 {
                                 }, (file) =>
