@@ -654,11 +654,8 @@ namespace MicroWin
                             {
                                 string extractvirtio = Path.Combine(AppState.MountPath, "virtio");
 
-                                iso.ExtractIso(drive?.ToString(), extractvirtio, (p) =>
-                                {
-                                }, (file) =>
-                                {
-                                });
+                                iso.ExtractIso(drive?.ToString(), extractvirtio, (p) => { }, (file) => { });
+
                                 InvokeFileProgressUIUpdate("");
                                 iso.Dismount(outputPath);
                             }
