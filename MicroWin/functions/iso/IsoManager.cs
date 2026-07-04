@@ -52,7 +52,7 @@ namespace MicroWin.functions.iso
             return String.Format("MSFT_DiskImage.ImagePath={0},StorageType=1", $"\"{isoPath.Replace("\\", "\\\\")}\"");
         }
 
-        public void ExtractIso(string? driveLetter, string destination, Action<int> progressCallback, Action<string> fileProgressCallback)
+        public void ExtractIso(string? driveLetter, string destination, Action<int>? progressCallback = null, Action<string>? fileProgressCallback = null)
         {
             string source = $"{driveLetter}:\\";
             DynaLog.logMessage($"Starting extraction from {source} to {destination}");
@@ -124,13 +124,13 @@ namespace MicroWin.functions.iso
                     string? destDir = Path.GetDirectoryName(destFile);
                     if (!Directory.Exists(destDir)) Directory.CreateDirectory(destDir ?? "");
 
-                    fileProgressCallback.Invoke(file);
+                    if (fileProgressCallback is not null) fileProgressCallback.Invoke(file);
 
                     File.Copy(file, destFile, true);
                     copiedFiles++;
 
                     int percentage = (int)((double)copiedFiles / files.Length * 100);
-                    progressCallback?.Invoke(percentage);
+                    if (progressCallback is not null) progressCallback.Invoke(percentage);
                 }
                 catch (Exception ex)
                 {
