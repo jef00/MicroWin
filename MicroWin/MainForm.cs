@@ -599,7 +599,7 @@ namespace MicroWin
                 RegistryHelper.AddRegistryItem("HKLM\\zSOFTWARE\\MicroWin", new RegistryItem("MicroWinBuildDate", ValueKind.REG_SZ, $"{DateTime.Now}"));
                 if (AppState.CopyVirtIODrivers)
                 {
-                    WriteLogMessage("Downloading VirtIO Drivers...");
+                    WriteLogMessage("Downloading VirtIO Drivers. This will take several minutes, depending on the speed of your network connection...");
 
                     var handler = new HttpClientHandler { AllowAutoRedirect = false };
 
