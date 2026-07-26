@@ -236,13 +236,13 @@ namespace MicroWin
 
         private void MSAcc_Button_Click(object sender, EventArgs e)
         {
-            // TODO: Implement use of MS Account
+            AppState.UseMSAccount = true;
         }
 
 
         private void Setup_Button_Click(object sender, EventArgs e)
         {
-            // TODO: Implement use of Setup to make accounts
+            AppState.UseSetup = true;
         }
 
 
