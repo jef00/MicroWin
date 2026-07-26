@@ -120,8 +120,8 @@ namespace MicroWin
             Back_Button.Enabled = !(newPage == WizardPage.Page.WelcomePage) && !(newPage == WizardPage.Page.FinishPage);
             ButtonPanel.Visible = !(newPage == WizardPage.Page.IsoCreationPage);
 
-            MSAcc_Button.Visible = (newPage != WizardPage.Page.UserAccountsPage);
-            Setup_Button.Visible = (newPage != WizardPage.Page.UserAccountsPage);
+            MSAcc_Button.Visible = (newPage == WizardPage.Page.UserAccountsPage);
+            Setup_Button.Visible = (newPage == WizardPage.Page.UserAccountsPage);
 
             Next_Button.Text = newPage == WizardPage.Page.FinishPage ? "Close" : "Next";
 
@@ -159,17 +159,20 @@ namespace MicroWin
                     installImageInfo = imageInfo?.ElementAtOrDefault(AppState.SelectedImageIndex - 1 ?? 0);
                     break;
                 case WizardPage.Page.UserAccountsPage:
-                    // Default to "User" if no name is set
-                    if (String.IsNullOrEmpty(usrNameTB.Text))
-                        usrNameTB.Text = "User";
-
-                    // Trim invalid characters from the user account
-                    char[] invalidChars = ['/', '\\', '[', ']', ':', ';', '|', '=', ',', '+', '*', '?', '<', '>', '\"', '%'];
-                    if (AppState.UserAccounts.Any())
+                    if (!AppState.UseMSAccount && !AppState.UseSetup)
                     {
-                        foreach (UserAccount account in AppState.UserAccounts)
+                        // Default to "User" if no name is set
+                        if (String.IsNullOrEmpty(usrNameTB.Text))
+                            usrNameTB.Text = "User";
+
+                        // Trim invalid characters from the user account
+                        char[] invalidChars = ['/', '\\', '[', ']', ':', ';', '|', '=', ',', '+', '*', '?', '<', '>', '\"', '%'];
+                        if (AppState.UserAccounts.Any())
                         {
-                            account.Name = new string(account.Name.Where(c => !invalidChars.Contains(c)).ToArray()).TrimEnd('.');
+                            foreach (UserAccount account in AppState.UserAccounts)
+                            {
+                                account.Name = new string(account.Name.Where(c => !invalidChars.Contains(c)).ToArray()).TrimEnd('.');
+                            }
                         }
                     }
                     break;
