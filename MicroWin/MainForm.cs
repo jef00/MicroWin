@@ -120,6 +120,9 @@ namespace MicroWin
             Back_Button.Enabled = !(newPage == WizardPage.Page.WelcomePage) && !(newPage == WizardPage.Page.FinishPage);
             ButtonPanel.Visible = !(newPage == WizardPage.Page.IsoCreationPage);
 
+            MSAcc_Button.Visible = (newPage != WizardPage.Page.UserAccountsPage);
+            Setup_Button.Visible = (newPage != WizardPage.Page.UserAccountsPage);
+
             Next_Button.Text = newPage == WizardPage.Page.FinishPage ? "Close" : "Next";
 
             if (CurrentWizardPage.wizardPage == WizardPage.Page.IsoCreationPage)
@@ -226,6 +229,17 @@ namespace MicroWin
         private void Back_Button_Click(object sender, EventArgs e)
         {
             ChangePage(CurrentWizardPage.wizardPage - 1);
+        }
+
+        private void MSAcc_Button_Click(object sender, EventArgs e)
+        {
+            // TODO: Implement use of MS Account
+        }
+
+
+        private void Setup_Button_Click(object sender, EventArgs e)
+        {
+            // TODO: Implement use of Setup to make accounts
         }
 
 
@@ -420,7 +434,7 @@ namespace MicroWin
                 }
                 catch
                 {
-                    // don't play this easter egg
+                    // Don't play this easter egg
                 }
             }
             usrPasswordTB.PasswordChar = usrPasswordRevealCB.Checked ? '\0' : '*';

@@ -31,8 +31,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             ButtonPanel = new Panel();
             TableLayoutPanel1 = new TableLayoutPanel();
+            TableLayoutPanel2 = new TableLayoutPanel();
             Back_Button = new Button();
             Next_Button = new Button();
+            MSAcc_Button = new Button();
+            Setup_Button = new Button();
             Cancel_Button = new Button();
             About_Button = new Button();
             PageContainerPanel = new Panel();
@@ -110,6 +113,7 @@
             isoSaverSFD = new SaveFileDialog();
             ButtonPanel.SuspendLayout();
             TableLayoutPanel1.SuspendLayout();
+            TableLayoutPanel2.SuspendLayout();
             PageContainerPanel.SuspendLayout();
             IsoSettingsPage.SuspendLayout();
             IsoChooserPage.SuspendLayout();
@@ -132,7 +136,7 @@
             // ButtonPanel
             // 
             ButtonPanel.Controls.Add(TableLayoutPanel1);
-            ButtonPanel.Controls.Add(About_Button);
+            ButtonPanel.Controls.Add(TableLayoutPanel2);
             ButtonPanel.Dock = DockStyle.Bottom;
             ButtonPanel.Location = new Point(0, 521);
             ButtonPanel.Name = "ButtonPanel";
@@ -155,6 +159,23 @@
             TableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             TableLayoutPanel1.Size = new Size(219, 29);
             TableLayoutPanel1.TabIndex = 1;
+            // 
+            // TableLayoutPanel2
+            // 
+            TableLayoutPanel2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            TableLayoutPanel2.ColumnCount = 3;
+            TableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            TableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            TableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            TableLayoutPanel2.Controls.Add(About_Button, 0, 0);
+            TableLayoutPanel2.Controls.Add(MSAcc_Button, 1, 0);
+            TableLayoutPanel2.Controls.Add(Setup_Button, 2, 0);
+            TableLayoutPanel2.Location = new Point(12, 6);
+            TableLayoutPanel2.Name = "TableLayoutPanel2";
+            TableLayoutPanel2.RowCount = 1;
+            TableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            TableLayoutPanel2.Size = new Size(500, 29);
+            TableLayoutPanel2.TabIndex = 1;
             // 
             // Back_Button
             // 
@@ -195,7 +216,7 @@
             // 
             // About_Button
             // 
-            About_Button.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            About_Button.Anchor = AnchorStyles.None;
             About_Button.DialogResult = DialogResult.Cancel;
             About_Button.FlatStyle = FlatStyle.System;
             About_Button.Location = new Point(12, 9);
@@ -204,6 +225,32 @@
             About_Button.TabIndex = 1;
             About_Button.Text = "About";
             About_Button.Click += About_Button_Click;
+            // 
+            // MSAcc_Button
+            // 
+            MSAcc_Button.Anchor = AnchorStyles.None;
+            MSAcc_Button.DialogResult = DialogResult.Cancel;
+            MSAcc_Button.FlatStyle = FlatStyle.System;
+            MSAcc_Button.Location = new Point(85, 9);
+            MSAcc_Button.Name = "MSAcc_Button";
+            MSAcc_Button.Size = new Size(130, 23);
+            MSAcc_Button.TabIndex = 1;
+            MSAcc_Button.Text = "Use Microsoft Account";
+            MSAcc_Button.Click += MSAcc_Button_Click;
+            MSAcc_Button.Visible = false;
+            // 
+            // Setup_Button
+            // 
+            Setup_Button.Anchor = AnchorStyles.None;
+            Setup_Button.DialogResult = DialogResult.Cancel;
+            Setup_Button.FlatStyle = FlatStyle.System;
+            Setup_Button.Location = new Point(224, 9);
+            Setup_Button.Name = "Setup_Button";
+            Setup_Button.Size = new Size(140, 23);
+            Setup_Button.TabIndex = 1;
+            Setup_Button.Text = "Add Users During Setup";
+            Setup_Button.Click += Setup_Button_Click;
+            Setup_Button.Visible = false;
             // 
             // PageContainerPanel
             // 
@@ -1028,6 +1075,7 @@
             SizeChanged += MainForm_SizeChanged;
             ButtonPanel.ResumeLayout(false);
             TableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel2.ResumeLayout(false);
             PageContainerPanel.ResumeLayout(false);
             IsoSettingsPage.ResumeLayout(false);
             IsoSettingsPage.PerformLayout();
@@ -1064,6 +1112,7 @@
 
         internal System.Windows.Forms.Panel ButtonPanel;
         internal System.Windows.Forms.TableLayoutPanel TableLayoutPanel1;
+        internal System.Windows.Forms.TableLayoutPanel TableLayoutPanel2;
         internal System.Windows.Forms.Button Back_Button;
         internal System.Windows.Forms.Button Next_Button;
         internal System.Windows.Forms.Button Cancel_Button;
@@ -1139,6 +1188,8 @@
         private System.Windows.Forms.LinkLabel lnkUseNtLite;
         private System.Windows.Forms.LinkLabel lnkUseDT;
         internal Button About_Button;
+        internal Button MSAcc_Button;
+        internal Button Setup_Button;
         internal Label lblFileStatus;
         private CheckBox UEFICA23CB;
     }
