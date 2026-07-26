@@ -90,7 +90,7 @@ namespace MicroWin.functions.dism
             xml.AppendLine("  </settings>");
             xml.AppendLine("  <settings pass=\"oobeSystem\">");
             xml.AppendLine("    <component name=\"Microsoft-Windows-Shell-Setup\" processorArchitecture=\"amd64\" publicKeyToken=\"31bf3856ad364e35\" language=\"neutral\" versionScope=\"nonSxS\">");
-            if (AppState.UserAccounts.Count > 0)
+            if (!AppState.UseMSAccount && !AppState.UseSetup)
             {
                 xml.AppendLine("      <UserAccounts>");
                 xml.AppendLine("        <LocalAccounts>");
