@@ -237,12 +237,14 @@ namespace MicroWin
         private void MSAcc_Button_Click(object sender, EventArgs e)
         {
             AppState.UseMSAccount = true;
+            ChangePage(CurrentWizardPage.wizardPage + 1);
         }
 
 
         private void Setup_Button_Click(object sender, EventArgs e)
         {
             AppState.UseSetup = true;
+            ChangePage(CurrentWizardPage.wizardPage + 1);
         }
 
 
