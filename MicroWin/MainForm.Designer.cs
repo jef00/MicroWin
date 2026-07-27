@@ -30,14 +30,13 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             ButtonPanel = new Panel();
+            Setup_Button = new Button();
+            MSAcc_Button = new Button();
+            About_Button = new Button();
             TableLayoutPanel1 = new TableLayoutPanel();
-            TableLayoutPanel2 = new TableLayoutPanel();
             Back_Button = new Button();
             Next_Button = new Button();
-            MSAcc_Button = new Button();
-            Setup_Button = new Button();
             Cancel_Button = new Button();
-            About_Button = new Button();
             PageContainerPanel = new Panel();
             IsoSettingsPage = new Panel();
             UEFICA23CB = new CheckBox();
@@ -87,13 +86,6 @@
             lnkImmersiveAccounts = new LinkLabel();
             label8 = new Label();
             b64CB = new CheckBox();
-            tableLayoutPanel2 = new TableLayoutPanel();
-            label6 = new Label();
-            label7 = new Label();
-            usrNameTB = new TextBox();
-            usrPasswordTB = new TextBox();
-            usrNameCurrentSysNameBtn = new Button();
-            usrPasswordRevealCB = new CheckBox();
             label5 = new Label();
             label4 = new Label();
             ImageChooserPage = new Panel();
@@ -109,11 +101,16 @@
             lblDisclaimer = new Label();
             WelcomePage_Description = new Label();
             WelcomePage_Header = new Label();
+            label6 = new Label();
+            label7 = new Label();
+            usrNameTB = new TextBox();
+            usrPasswordTB = new TextBox();
+            usrNameCurrentSysNameBtn = new Button();
+            usrPasswordRevealCB = new CheckBox();
             isoPickerOFD = new OpenFileDialog();
             isoSaverSFD = new SaveFileDialog();
             ButtonPanel.SuspendLayout();
             TableLayoutPanel1.SuspendLayout();
-            TableLayoutPanel2.SuspendLayout();
             PageContainerPanel.SuspendLayout();
             IsoSettingsPage.SuspendLayout();
             IsoChooserPage.SuspendLayout();
@@ -128,20 +125,59 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             panel2.SuspendLayout();
-            tableLayoutPanel2.SuspendLayout();
             ImageChooserPage.SuspendLayout();
             WelcomePage.SuspendLayout();
             SuspendLayout();
             // 
             // ButtonPanel
             // 
+            ButtonPanel.Controls.Add(Setup_Button);
+            ButtonPanel.Controls.Add(MSAcc_Button);
+            ButtonPanel.Controls.Add(About_Button);
             ButtonPanel.Controls.Add(TableLayoutPanel1);
-            ButtonPanel.Controls.Add(TableLayoutPanel2);
             ButtonPanel.Dock = DockStyle.Bottom;
             ButtonPanel.Location = new Point(0, 521);
             ButtonPanel.Name = "ButtonPanel";
             ButtonPanel.Size = new Size(1008, 40);
             ButtonPanel.TabIndex = 1;
+            // 
+            // Setup_Button
+            // 
+            Setup_Button.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            Setup_Button.DialogResult = DialogResult.Cancel;
+            Setup_Button.FlatStyle = FlatStyle.System;
+            Setup_Button.Location = new Point(218, 9);
+            Setup_Button.Name = "Setup_Button";
+            Setup_Button.Size = new Size(140, 23);
+            Setup_Button.TabIndex = 1;
+            Setup_Button.Text = "Add Users During Setup";
+            Setup_Button.Visible = false;
+            Setup_Button.Click += Setup_Button_Click;
+            // 
+            // MSAcc_Button
+            // 
+            MSAcc_Button.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            MSAcc_Button.DialogResult = DialogResult.Cancel;
+            MSAcc_Button.FlatStyle = FlatStyle.System;
+            MSAcc_Button.Location = new Point(82, 9);
+            MSAcc_Button.Name = "MSAcc_Button";
+            MSAcc_Button.Size = new Size(130, 23);
+            MSAcc_Button.TabIndex = 1;
+            MSAcc_Button.Text = "Use Microsoft Account";
+            MSAcc_Button.Visible = false;
+            MSAcc_Button.Click += MSAcc_Button_Click;
+            // 
+            // About_Button
+            // 
+            About_Button.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            About_Button.DialogResult = DialogResult.Cancel;
+            About_Button.FlatStyle = FlatStyle.System;
+            About_Button.Location = new Point(12, 9);
+            About_Button.Name = "About_Button";
+            About_Button.Size = new Size(64, 23);
+            About_Button.TabIndex = 1;
+            About_Button.Text = "About";
+            About_Button.Click += About_Button_Click;
             // 
             // TableLayoutPanel1
             // 
@@ -159,23 +195,6 @@
             TableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             TableLayoutPanel1.Size = new Size(219, 29);
             TableLayoutPanel1.TabIndex = 1;
-            // 
-            // TableLayoutPanel2
-            // 
-            TableLayoutPanel2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            TableLayoutPanel2.ColumnCount = 3;
-            TableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            TableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            TableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            TableLayoutPanel2.Controls.Add(About_Button, 0, 0);
-            TableLayoutPanel2.Controls.Add(MSAcc_Button, 1, 0);
-            TableLayoutPanel2.Controls.Add(Setup_Button, 2, 0);
-            TableLayoutPanel2.Location = new Point(12, 6);
-            TableLayoutPanel2.Name = "TableLayoutPanel2";
-            TableLayoutPanel2.RowCount = 1;
-            TableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            TableLayoutPanel2.Size = new Size(500, 29);
-            TableLayoutPanel2.TabIndex = 1;
             // 
             // Back_Button
             // 
@@ -213,44 +232,6 @@
             Cancel_Button.TabIndex = 1;
             Cancel_Button.Text = "Cancel";
             Cancel_Button.Click += Cancel_Button_Click;
-            // 
-            // About_Button
-            // 
-            About_Button.Anchor = AnchorStyles.None;
-            About_Button.DialogResult = DialogResult.Cancel;
-            About_Button.FlatStyle = FlatStyle.System;
-            About_Button.Location = new Point(12, 9);
-            About_Button.Name = "About_Button";
-            About_Button.Size = new Size(64, 23);
-            About_Button.TabIndex = 1;
-            About_Button.Text = "About";
-            About_Button.Click += About_Button_Click;
-            // 
-            // MSAcc_Button
-            // 
-            MSAcc_Button.Anchor = AnchorStyles.None;
-            MSAcc_Button.DialogResult = DialogResult.Cancel;
-            MSAcc_Button.FlatStyle = FlatStyle.System;
-            MSAcc_Button.Location = new Point(85, 9);
-            MSAcc_Button.Name = "MSAcc_Button";
-            MSAcc_Button.Size = new Size(130, 23);
-            MSAcc_Button.TabIndex = 1;
-            MSAcc_Button.Text = "Use Microsoft Account";
-            MSAcc_Button.Click += MSAcc_Button_Click;
-            MSAcc_Button.Visible = false;
-            // 
-            // Setup_Button
-            // 
-            Setup_Button.Anchor = AnchorStyles.None;
-            Setup_Button.DialogResult = DialogResult.Cancel;
-            Setup_Button.FlatStyle = FlatStyle.System;
-            Setup_Button.Location = new Point(224, 9);
-            Setup_Button.Name = "Setup_Button";
-            Setup_Button.Size = new Size(140, 23);
-            Setup_Button.TabIndex = 1;
-            Setup_Button.Text = "Add Users During Setup";
-            Setup_Button.Click += Setup_Button_Click;
-            Setup_Button.Visible = false;
             // 
             // PageContainerPanel
             // 
@@ -670,7 +651,6 @@
             // 
             UserAccountsPage.Controls.Add(panel1);
             UserAccountsPage.Controls.Add(b64CB);
-            UserAccountsPage.Controls.Add(tableLayoutPanel2);
             UserAccountsPage.Controls.Add(label5);
             UserAccountsPage.Controls.Add(label4);
             UserAccountsPage.Dock = DockStyle.Fill;
@@ -820,98 +800,6 @@
             b64CB.UseVisualStyleBackColor = true;
             b64CB.CheckedChanged += b64CB_CheckedChanged;
             // 
-            // tableLayoutPanel2
-            // 
-            tableLayoutPanel2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            tableLayoutPanel2.ColumnCount = 3;
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 19.12799F));
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60.85919F));
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20.04773F));
-            tableLayoutPanel2.Controls.Add(label6, 0, 0);
-            tableLayoutPanel2.Controls.Add(label7, 0, 1);
-            tableLayoutPanel2.Controls.Add(usrNameTB, 1, 0);
-            tableLayoutPanel2.Controls.Add(usrPasswordTB, 1, 1);
-            tableLayoutPanel2.Controls.Add(usrNameCurrentSysNameBtn, 2, 0);
-            tableLayoutPanel2.Controls.Add(usrPasswordRevealCB, 2, 1);
-            tableLayoutPanel2.Location = new Point(85, 133);
-            tableLayoutPanel2.Name = "tableLayoutPanel2";
-            tableLayoutPanel2.RowCount = 2;
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel2.Size = new Size(838, 59);
-            tableLayoutPanel2.TabIndex = 5;
-            // 
-            // label6
-            // 
-            label6.AutoEllipsis = true;
-            label6.Dock = DockStyle.Fill;
-            label6.Location = new Point(3, 0);
-            label6.Name = "label6";
-            label6.Size = new Size(154, 29);
-            label6.TabIndex = 4;
-            label6.Text = "User Name:";
-            label6.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // label7
-            // 
-            label7.AutoEllipsis = true;
-            label7.Dock = DockStyle.Fill;
-            label7.Location = new Point(3, 29);
-            label7.Name = "label7";
-            label7.Size = new Size(154, 30);
-            label7.TabIndex = 4;
-            label7.Text = "Password:";
-            label7.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // usrNameTB
-            // 
-            usrNameTB.BorderStyle = BorderStyle.FixedSingle;
-            usrNameTB.Dock = DockStyle.Fill;
-            usrNameTB.Location = new Point(163, 3);
-            usrNameTB.MaxLength = 20;
-            usrNameTB.Name = "usrNameTB";
-            usrNameTB.Size = new Size(503, 23);
-            usrNameTB.TabIndex = 5;
-            usrNameTB.TextChanged += usrNameTB_TextChanged;
-            // 
-            // usrPasswordTB
-            // 
-            usrPasswordTB.BorderStyle = BorderStyle.FixedSingle;
-            usrPasswordTB.Dock = DockStyle.Fill;
-            usrPasswordTB.Location = new Point(163, 32);
-            usrPasswordTB.Name = "usrPasswordTB";
-            usrPasswordTB.PasswordChar = '*';
-            usrPasswordTB.Size = new Size(503, 23);
-            usrPasswordTB.TabIndex = 5;
-            usrPasswordTB.TextChanged += usrPasswordTB_TextChanged;
-            // 
-            // usrNameCurrentSysNameBtn
-            // 
-            usrNameCurrentSysNameBtn.Dock = DockStyle.Fill;
-            usrNameCurrentSysNameBtn.FlatStyle = FlatStyle.System;
-            usrNameCurrentSysNameBtn.Location = new Point(672, 3);
-            usrNameCurrentSysNameBtn.Name = "usrNameCurrentSysNameBtn";
-            usrNameCurrentSysNameBtn.Size = new Size(163, 23);
-            usrNameCurrentSysNameBtn.TabIndex = 6;
-            usrNameCurrentSysNameBtn.Text = "Use current user name";
-            usrNameCurrentSysNameBtn.UseVisualStyleBackColor = true;
-            usrNameCurrentSysNameBtn.Click += usrNameCurrentSysNameBtn_Click;
-            // 
-            // usrPasswordRevealCB
-            // 
-            usrPasswordRevealCB.Appearance = Appearance.Button;
-            usrPasswordRevealCB.AutoSize = true;
-            usrPasswordRevealCB.Dock = DockStyle.Fill;
-            usrPasswordRevealCB.FlatStyle = FlatStyle.System;
-            usrPasswordRevealCB.Location = new Point(672, 32);
-            usrPasswordRevealCB.Name = "usrPasswordRevealCB";
-            usrPasswordRevealCB.Size = new Size(163, 24);
-            usrPasswordRevealCB.TabIndex = 7;
-            usrPasswordRevealCB.Text = "Reveal password";
-            usrPasswordRevealCB.TextAlign = ContentAlignment.MiddleCenter;
-            usrPasswordRevealCB.UseVisualStyleBackColor = true;
-            usrPasswordRevealCB.CheckedChanged += usrPasswordRevealCB_CheckedChanged;
-            // 
             // label5
             // 
             label5.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -1047,6 +935,77 @@
             WelcomePage_Header.TabIndex = 0;
             WelcomePage_Header.Text = "Welcome";
             // 
+            // label6
+            // 
+            label6.AutoEllipsis = true;
+            label6.Dock = DockStyle.Fill;
+            label6.Location = new Point(3, 0);
+            label6.Name = "label6";
+            label6.Size = new Size(154, 29);
+            label6.TabIndex = 4;
+            label6.Text = "User Name:";
+            label6.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // label7
+            // 
+            label7.AutoEllipsis = true;
+            label7.Dock = DockStyle.Fill;
+            label7.Location = new Point(3, 29);
+            label7.Name = "label7";
+            label7.Size = new Size(154, 30);
+            label7.TabIndex = 4;
+            label7.Text = "Password:";
+            label7.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // usrNameTB
+            // 
+            usrNameTB.BorderStyle = BorderStyle.FixedSingle;
+            usrNameTB.Dock = DockStyle.Fill;
+            usrNameTB.Location = new Point(163, 3);
+            usrNameTB.MaxLength = 20;
+            usrNameTB.Name = "usrNameTB";
+            usrNameTB.Size = new Size(503, 23);
+            usrNameTB.TabIndex = 5;
+            usrNameTB.TextChanged += usrNameTB_TextChanged;
+            // 
+            // usrPasswordTB
+            // 
+            usrPasswordTB.BorderStyle = BorderStyle.FixedSingle;
+            usrPasswordTB.Dock = DockStyle.Fill;
+            usrPasswordTB.Location = new Point(163, 32);
+            usrPasswordTB.Name = "usrPasswordTB";
+            usrPasswordTB.PasswordChar = '*';
+            usrPasswordTB.Size = new Size(503, 23);
+            usrPasswordTB.TabIndex = 5;
+            usrPasswordTB.TextChanged += usrPasswordTB_TextChanged;
+            // 
+            // usrNameCurrentSysNameBtn
+            // 
+            usrNameCurrentSysNameBtn.Dock = DockStyle.Fill;
+            usrNameCurrentSysNameBtn.FlatStyle = FlatStyle.System;
+            usrNameCurrentSysNameBtn.Location = new Point(672, 3);
+            usrNameCurrentSysNameBtn.Name = "usrNameCurrentSysNameBtn";
+            usrNameCurrentSysNameBtn.Size = new Size(163, 23);
+            usrNameCurrentSysNameBtn.TabIndex = 6;
+            usrNameCurrentSysNameBtn.Text = "Use current user name";
+            usrNameCurrentSysNameBtn.UseVisualStyleBackColor = true;
+            usrNameCurrentSysNameBtn.Click += usrNameCurrentSysNameBtn_Click;
+            // 
+            // usrPasswordRevealCB
+            // 
+            usrPasswordRevealCB.Appearance = Appearance.Button;
+            usrPasswordRevealCB.AutoSize = true;
+            usrPasswordRevealCB.Dock = DockStyle.Fill;
+            usrPasswordRevealCB.FlatStyle = FlatStyle.System;
+            usrPasswordRevealCB.Location = new Point(672, 32);
+            usrPasswordRevealCB.Name = "usrPasswordRevealCB";
+            usrPasswordRevealCB.Size = new Size(163, 24);
+            usrPasswordRevealCB.TabIndex = 7;
+            usrPasswordRevealCB.Text = "Reveal password";
+            usrPasswordRevealCB.TextAlign = ContentAlignment.MiddleCenter;
+            usrPasswordRevealCB.UseVisualStyleBackColor = true;
+            usrPasswordRevealCB.CheckedChanged += usrPasswordRevealCB_CheckedChanged;
+            // 
             // isoPickerOFD
             // 
             isoPickerOFD.Filter = "ISO Files|*.iso";
@@ -1075,7 +1034,6 @@
             SizeChanged += MainForm_SizeChanged;
             ButtonPanel.ResumeLayout(false);
             TableLayoutPanel1.ResumeLayout(false);
-            tableLayoutPanel2.ResumeLayout(false);
             PageContainerPanel.ResumeLayout(false);
             IsoSettingsPage.ResumeLayout(false);
             IsoSettingsPage.PerformLayout();
@@ -1099,8 +1057,6 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
-            tableLayoutPanel2.ResumeLayout(false);
-            tableLayoutPanel2.PerformLayout();
             ImageChooserPage.ResumeLayout(false);
             ImageChooserPage.PerformLayout();
             WelcomePage.ResumeLayout(false);
@@ -1112,7 +1068,6 @@
 
         internal System.Windows.Forms.Panel ButtonPanel;
         internal System.Windows.Forms.TableLayoutPanel TableLayoutPanel1;
-        internal System.Windows.Forms.TableLayoutPanel TableLayoutPanel2;
         internal System.Windows.Forms.Button Back_Button;
         internal System.Windows.Forms.Button Next_Button;
         internal System.Windows.Forms.Button Cancel_Button;
@@ -1141,7 +1096,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel UserAccountsPage;
         internal System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         internal System.Windows.Forms.Label label6;
         internal System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox usrNameTB;
