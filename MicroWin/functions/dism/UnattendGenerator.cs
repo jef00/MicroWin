@@ -128,14 +128,7 @@ namespace MicroWin.functions.dism
             xml.AppendLine("        <HideOEMRegistrationScreen>true</HideOEMRegistrationScreen>");
             xml.AppendLine("        <SkipUserOOBE>true</SkipUserOOBE>");
             xml.AppendLine("        <SkipMachineOOBE>true</SkipMachineOOBE>");
-            if (AppState.UseMSAccount == true)
-            {
-                xml.AppendLine("        <HideOnlineAccountScreens>false</HideOnlineAccountScreens>");
-            }
-            else
-            {
-                xml.AppendLine("        <HideOnlineAccountScreens>true</HideOnlineAccountScreens>");
-            }
+            xml.AppendLine($"        <HideOnlineAccountScreens>{(AppState.UseMSAccount ? "false" : "true")}</HideOnlineAccountScreens>");
             if (AppState.UseSetup)
             {
                 xml.AppendLine("        <HideLocalAccountScreen>false</HideLocalAccountScreen>");
