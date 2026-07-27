@@ -136,7 +136,7 @@ namespace MicroWin.functions.dism
             {
                 xml.AppendLine("        <HideOnlineAccountScreens>true</HideOnlineAccountScreens>");
             }
-            if (AppState.UseSetup == true)
+            if (AppState.UseSetup)
             {
                 xml.AppendLine("        <HideLocalAccountScreen>false</HideLocalAccountScreen>");
             }
