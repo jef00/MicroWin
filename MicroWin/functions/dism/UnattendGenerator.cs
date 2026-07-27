@@ -126,8 +126,16 @@ namespace MicroWin.functions.dism
             }
             xml.AppendLine("      <OOBE>");
             xml.AppendLine("        <HideOEMRegistrationScreen>true</HideOEMRegistrationScreen>");
-            xml.AppendLine("        <SkipUserOOBE>true</SkipUserOOBE>");
-            xml.AppendLine("        <SkipMachineOOBE>true</SkipMachineOOBE>");
+            if (!AppState.UseSetup)
+            {
+                // We don't need this if we are using Local Accounts made via setup.
+                xml.AppendLine("        <SkipUserOOBE>true</SkipUserOOBE>");
+            }
+            if (!AppState.UseMSAccount && !AppState.UseSetup)
+            {
+                // So we can make the accounts
+                xml.AppendLine("        <SkipMachineOOBE>true</SkipMachineOOBE>");
+            }
             xml.AppendLine($"        <HideOnlineAccountScreens>{(AppState.UseMSAccount ? "false" : "true")}</HideOnlineAccountScreens>");
             if (AppState.UseSetup)
             {
