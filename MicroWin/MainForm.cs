@@ -613,6 +613,9 @@ namespace MicroWin
 
                     var handler = new HttpClientHandler { AllowAutoRedirect = false };
 
+#pragma warning disable CS8600
+#pragma warning disable CS8602
+
                     using (var client = new HttpClient(handler))
                     {
                         string targetUrl = "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso";
@@ -674,6 +677,9 @@ namespace MicroWin
                     }
                 }
                 UpdateCurrentProgressBar(10);
+
+#pragma warning restore CS8600
+#pragma warning restore CS8602
 
                 WriteLogMessage("Disabling WPBT...");
                 RegistryHelper.AddRegistryItem("HKLM\\zSYSTEM\\ControlSet001\\Control\\Session Manager", new RegistryItem("DisableWpbtExecution", ValueKind.REG_DWORD, 1));
