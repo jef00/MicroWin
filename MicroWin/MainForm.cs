@@ -962,6 +962,7 @@ namespace MicroWin
             UpdateOverallProgressBar(100);
             UpdateCurrentProgressBar(100);
             BusyCannotClose = false;
+            WindowHelper.DisplayNotificationBalloon(ToolTipIcon.Info, "ISO file creation results", "Your ISO file has been successfully created.");
             ChangePage(WizardPage.Page.FinishPage);
         }
 
