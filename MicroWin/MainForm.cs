@@ -558,7 +558,7 @@ namespace MicroWin
                 {
                     UpdateOverallProgressBar(5);
                     WriteLogMessage("Beginning driver export...");
-                    DriverExportHelper.ExportDrivers(bootDriverPath, "SCSIAdapter", (message) => WriteLogMessage(message));
+                    DriverExportHelper.ExportDrivers(bootDriverPath, ["SCSIAdapter", "Net"], (message) => WriteLogMessage(message));
                     if (AppState.DriverExportMode == DriverExportMode.ExportAll)
                         DriverExportHelper.ExportDrivers(allDriversPath, (message) => WriteLogMessage(message));
 
