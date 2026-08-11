@@ -441,8 +441,6 @@ namespace MicroWin
         private void CopyVirtIODrivers_CheckedChanged(Object sender, EventArgs e)
         {
             AppState.CopyVirtIODrivers = CopyVirtIODrivers.Checked;
-            label19.Text = "To proceed with installation of the MicroWin image in QEMU/Proxmox VE:\n1. Proceed with Setup until you reach the disk selection screen, in which you won't see any drives\n2. Click \"Load Driver\" and click Browse\n3. In the folder selection dialog, point to this path: \"D:\\VirtIO\\vioscsi\\w11\\amd64\" (replace amd64 with ARM64 if you are using Windows on ARM, and \"D:\" with the drive letter of the ISO)\n4. Select all drivers that will appear in the list box and click OK";
-
             label19.Visible = CopyVirtIODrivers.Checked;
         }
 
@@ -457,6 +455,18 @@ namespace MicroWin
             AppState.UseUEFICA23Bins = UEFICA23CB.Checked;
         }
 
+        private void winutilConfigTextBox_TextChanged(object sender, EventArgs e)
+        {
+            AppState.WinUtilConfigPath = winutilConfigTextBox.Text;
+        }
+
+        private void winutilConfigBrowseBtn_Click(object sender, EventArgs e)
+        {
+            if (winutilConfigDialog.ShowDialog() == DialogResult.OK)
+            {
+                winutilConfigTextBox.Text = winutilConfigDialog.FileName;
+            }
+        }
 
         private void UpdateCurrentStatus(string text, bool resetBar = true)
         {
@@ -554,7 +564,7 @@ namespace MicroWin
                 {
                     UpdateOverallProgressBar(5);
                     WriteLogMessage("Beginning driver export...");
-                    DriverExportHelper.ExportDrivers(bootDriverPath, "SCSIAdapter", (message) => WriteLogMessage(message));
+                    DriverExportHelper.ExportDrivers(bootDriverPath, ["SCSIAdapter", "Net"], (message) => WriteLogMessage(message));
                     if (AppState.DriverExportMode == DriverExportMode.ExportAll)
                         DriverExportHelper.ExportDrivers(allDriversPath, (message) => WriteLogMessage(message));
 
@@ -734,7 +744,21 @@ namespace MicroWin
                     try
                     {
                         var data = client.GetByteArrayAsync("https://github.com/CodingWonders/MicroWin/raw/main/MicroWin/tools/FirstStartup.ps1").GetAwaiter().GetResult();
-                        File.WriteAllBytes(Path.Combine(AppState.ScratchPath, "Windows", "FirstStartup.ps1"), data);
+                        string firstStartupPath = Path.Combine(AppState.ScratchPath, "Windows", "FirstStartup.ps1");
+                        File.WriteAllBytes(firstStartupPath, data);
+
+                        if (!string.IsNullOrWhiteSpace(AppState.WinUtilConfigPath) && File.Exists(AppState.WinUtilConfigPath))
+                        {
+                            File.Copy(AppState.WinUtilConfigPath, Path.Combine(AppState.ScratchPath, "winutil-config.json"), true);
+                            WriteLogMessage("WinUtil configuration file copied to image.");
+
+                            string scriptToAppend = "\n\nif (Test-Path -Path \"$env:HOMEDRIVE\\winutil-config.json\")\n" +
+                                                    "{\n" +
+                                                    "    Write-Host \"Configuration file detected. Applying...\"\n" +
+                                                    "    iex \"& { $(irm christitus.com/win) } -Config `\"$env:HOMEDRIVE\\winutil-config.json`\"\"\n" +
+                                                    "}\n";
+                            File.AppendAllText(firstStartupPath, scriptToAppend);
+                        }
                     }
                     catch { }
                 }
