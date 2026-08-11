@@ -37,6 +37,7 @@
             About_Button = new Button();
             PageContainerPanel = new Panel();
             IsoSettingsPage = new Panel();
+            label19 = new Label();
             UEFICA23CB = new CheckBox();
             DriverExportCombo = new ComboBox();
             label13 = new Label();
@@ -47,6 +48,7 @@
             winutilConfigLabel = new Label();
             winutilConfigTextBox = new TextBox();
             winutilConfigBrowseBtn = new Button();
+            CopyVirtIODrivers = new CheckBox();
             IsoChooserPage = new Panel();
             isoExtractionPB = new ProgressBar();
             isoPickerBtn = new Button();
@@ -227,6 +229,7 @@
             // 
             // IsoSettingsPage
             // 
+            IsoSettingsPage.Controls.Add(label19);
             IsoSettingsPage.Controls.Add(UEFICA23CB);
             IsoSettingsPage.Controls.Add(DriverExportCombo);
             IsoSettingsPage.Controls.Add(label13);
@@ -237,11 +240,23 @@
             IsoSettingsPage.Controls.Add(winutilConfigLabel);
             IsoSettingsPage.Controls.Add(winutilConfigTextBox);
             IsoSettingsPage.Controls.Add(winutilConfigBrowseBtn);
+            IsoSettingsPage.Controls.Add(CopyVirtIODrivers);
             IsoSettingsPage.Dock = DockStyle.Fill;
             IsoSettingsPage.Location = new Point(0, 0);
             IsoSettingsPage.Name = "IsoSettingsPage";
             IsoSettingsPage.Size = new Size(1008, 521);
             IsoSettingsPage.TabIndex = 6;
+            // 
+            // label19
+            // 
+            label19.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            label19.AutoEllipsis = true;
+            label19.Location = new Point(101, 340);
+            label19.Name = "label19";
+            label19.Size = new Size(806, 123);
+            label19.TabIndex = 14;
+            label19.Text = resources.GetString("label19.Text");
+            label19.Visible = false;
             // 
             // UEFICA23CB
             // 
@@ -347,6 +362,17 @@
             winutilConfigBrowseBtn.Text = "Browse...";
             winutilConfigBrowseBtn.UseVisualStyleBackColor = true;
             winutilConfigBrowseBtn.Click += winutilConfigBrowseBtn_Click;
+            // 
+            // CopyVirtIODrivers
+            // 
+            CopyVirtIODrivers.AutoSize = true;
+            CopyVirtIODrivers.Location = new Point(83, 318);
+            CopyVirtIODrivers.Name = "CopyVirtIODrivers";
+            CopyVirtIODrivers.Size = new Size(125, 19);
+            CopyVirtIODrivers.TabIndex = 7;
+            CopyVirtIODrivers.Text = "Copy VirtIO drivers";
+            CopyVirtIODrivers.UseVisualStyleBackColor = true;
+            CopyVirtIODrivers.CheckedChanged += CopyVirtIODrivers_CheckedChanged;
             // 
             // IsoChooserPage
             // 
@@ -1155,6 +1181,7 @@
         internal System.Windows.Forms.Label label11;
         internal System.Windows.Forms.Label label12;
         private System.Windows.Forms.CheckBox ReportToolCB;
+        private System.Windows.Forms.CheckBox CopyVirtIODrivers;
         private System.Windows.Forms.ComboBox DriverExportCombo;
         private System.Windows.Forms.Label winutilConfigLabel;
         private System.Windows.Forms.TextBox winutilConfigTextBox;
@@ -1184,5 +1211,6 @@
         internal Button About_Button;
         internal Label lblFileStatus;
         private CheckBox UEFICA23CB;
+        internal Label label19;
     }
 }

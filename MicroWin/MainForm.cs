@@ -438,6 +438,12 @@ namespace MicroWin
             AppState.AddReportingToolShortcut = ReportToolCB.Checked;
         }
 
+        private void CopyVirtIODrivers_CheckedChanged(Object sender, EventArgs e)
+        {
+            AppState.CopyVirtIODrivers = CopyVirtIODrivers.Checked;
+            label19.Visible = CopyVirtIODrivers.Checked;
+        }
+
 
         private void UnattendCopyCB_CheckedChanged(object sender, EventArgs e)
         {
@@ -597,11 +603,75 @@ namespace MicroWin
                         var data = await client.GetByteArrayAsync("https://raw.githubusercontent.com/CodingWonders/MyScripts/refs/heads/main/MicroWinHelperTools/ReportingTool/ReportingTool.ps1");
                         File.WriteAllBytes(Path.Combine(AppState.ScratchPath, "ReportingTool.ps1"), data);
                     }
+                }
+                RegistryHelper.AddRegistryItem("HKLM\\zSOFTWARE\\MicroWin");
+                RegistryHelper.AddRegistryItem("HKLM\\zSOFTWARE\\MicroWin", new RegistryItem("MicroWinVersion", ValueKind.REG_SZ, $"{AppState.Version}"));
+                RegistryHelper.AddRegistryItem("HKLM\\zSOFTWARE\\MicroWin", new RegistryItem("MicroWinBuildDate", ValueKind.REG_SZ, $"{DateTime.Now}"));
+                if (AppState.CopyVirtIODrivers)
+                {
+                    WriteLogMessage("Downloading VirtIO Drivers. This will take several minutes, depending on the speed of your network connection...");
 
-                    RegistryHelper.AddRegistryItem("HKLM\\zSOFTWARE\\MicroWin");
-                    RegistryHelper.AddRegistryItem("HKLM\\zSOFTWARE\\MicroWin", new RegistryItem("MicroWinVersion", ValueKind.REG_SZ, $"{AppState.Version}"));
-                    RegistryHelper.AddRegistryItem("HKLM\\zSOFTWARE\\MicroWin", new RegistryItem("MicroWinBuildDate", ValueKind.REG_SZ, $"{DateTime.Now}"));
+                    var handler = new HttpClientHandler { AllowAutoRedirect = false };
 
+                    using (var client = new HttpClient(handler))
+                    {
+                        string targetUrl = "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso";
+                        HttpResponseMessage downloadResponse = null;
+                        bool isRedirect = true;
+                        int maxRedirects = 5;
+                        int redirectCount = 0;
+
+                        while (isRedirect && redirectCount < maxRedirects)
+                        {
+                            downloadResponse = await client.GetAsync(targetUrl, HttpCompletionOption.ResponseHeadersRead);
+
+                            int statusCode = (int)downloadResponse.StatusCode;
+                            if (statusCode >= 300 && statusCode <= 399 && downloadResponse.Headers.Location != null)
+                            {
+                                targetUrl = downloadResponse.Headers.Location.ToString();
+
+                                if (!targetUrl.StartsWith("http://") && !targetUrl.StartsWith("https://"))
+                                {
+                                    var baseUri = new Uri(targetUrl);
+                                    targetUrl = new Uri(baseUri, downloadResponse.Headers.Location).ToString();
+                                }
+
+                                downloadResponse.Dispose();
+                                redirectCount++;
+                            }
+                            else
+                            {
+                                isRedirect = false;
+                            }
+                        }
+                        string outputPath = Path.Combine(AppState.ScratchPath, "virtio-win.iso");
+                        using (downloadResponse)
+                        {
+                            downloadResponse.EnsureSuccessStatusCode();
+
+                            using (var downloadStream = await downloadResponse.Content.ReadAsStreamAsync())
+                            using (var fileStream = new FileStream(outputPath, FileMode.Create, FileAccess.Write, FileShare.None, 8192, true))
+                            {
+                                await downloadStream.CopyToAsync(fileStream);
+                            }
+                        }
+
+                        await Task.Run(() =>
+                        {
+                            var iso = new IsoManager();
+
+                            char? drive = iso.MountAndGetDrive(outputPath);
+                            if (drive != '\0')
+                            {
+                                string extractvirtio = Path.Combine(AppState.MountPath, "virtio");
+
+                                iso.ExtractIso(drive?.ToString(), extractvirtio, (p) => { }, (file) => { });
+
+                                InvokeFileProgressUIUpdate("");
+                                iso.Dismount(outputPath);
+                            }
+                        });
+                    }
                 }
                 UpdateCurrentProgressBar(10);
 
