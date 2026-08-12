@@ -63,8 +63,8 @@ namespace MicroWin.functions.dism
                     pbReporter.Invoke((int)(((double)idx / appsToRemove.ToList().Count) * 100));
                     try
                     {
-                        logWriter.Invoke($"AppX package {appToRemove} was successfully removed.");
                         DismApi.RemoveProvisionedAppxPackage(session, appToRemove);
+                        logWriter.Invoke($"AppX package {appToRemove} was successfully removed.");
                     }
                     catch (Exception ex)
                     {
