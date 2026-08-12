@@ -16,7 +16,7 @@ namespace MicroWin.functions.dism
             protected set;
         } = [
                 "ApplicationModel",
-                "indows-Client-LanguagePack",
+                "Windows-Client-LanguagePack",
                 "LanguageFeatures-Basic",
                 "Package_for_ServicingStack",
                 "DotNet",
