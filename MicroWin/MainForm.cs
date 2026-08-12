@@ -537,6 +537,10 @@ namespace MicroWin
 
 """;
 
+#pragma warning disable CS8600
+#pragma warning disable CS8602
+#pragma warning disable CS8604
+
             WindowHelper.DisableCloseCapability(Handle);
             BusyCannotClose = true;
 
@@ -559,7 +563,6 @@ namespace MicroWin
                 WriteLogMessage("Creating unattended answer file...");
                 UnattendGenerator.CreateUnattend($"{Path.Combine(AppState.ScratchPath, "Windows", "Panther")}", installImageInfo?.ProductVersion);
 
-#pragma warning disable CS8604
                 if (AppState.DriverExportMode > DriverExportMode.NoExport)
                 {
                     UpdateOverallProgressBar(5);
@@ -578,7 +581,6 @@ namespace MicroWin
 
                     WriteLogMessage("Driver import complete.");
                 }
-#pragma warning restore CS8604
 
                 UpdateOverallProgressBar(10);
                 new OsFeatureDisabler().RunTask((p) => UpdateCurrentProgressBar(p), (msg) => UpdateCurrentStatus(msg, false), (msg) => WriteLogMessage(msg));
@@ -612,9 +614,6 @@ namespace MicroWin
                     WriteLogMessage("Downloading VirtIO Drivers. This will take several minutes, depending on the speed of your network connection...");
 
                     var handler = new HttpClientHandler { AllowAutoRedirect = false };
-
-#pragma warning disable CS8600
-#pragma warning disable CS8602
 
                     using (var client = new HttpClient(handler))
                     {
@@ -677,9 +676,6 @@ namespace MicroWin
                     }
                 }
                 UpdateCurrentProgressBar(10);
-
-#pragma warning restore CS8600
-#pragma warning restore CS8602
 
                 WriteLogMessage("Disabling WPBT...");
                 RegistryHelper.AddRegistryItem("HKLM\\zSYSTEM\\ControlSet001\\Control\\Session Manager", new RegistryItem("DisableWpbtExecution", ValueKind.REG_DWORD, 1));
@@ -784,7 +780,6 @@ namespace MicroWin
 
                 string exportedWimFile = $"{AppState.ScratchPath.TrimEnd("\\")}\\install2.wim";
                 UpdateCurrentStatus("Exporting install image...");
-#pragma warning disable CS8604
                 if (DismManager.ExportImage(installwimPath, AppState.SelectedImageIndex, exportedWimFile, "max", (p) => WriteLogMessage(p)))
                 {
                     try
@@ -797,7 +792,6 @@ namespace MicroWin
 
                     }
                 }
-#pragma warning restore CS8604
 
                 string bootwimPath = Path.Combine(AppState.MountPath, "sources", "boot.wim");
                 if (!File.Exists(bootwimPath)) bootwimPath = Path.Combine(AppState.MountPath, "sources", "boot.esd");
@@ -830,9 +824,7 @@ namespace MicroWin
                 // Old Setup should only be imposed on 24H2 and later (builds 26040 and later). Get this information
                 bool shouldUsePanther = false;
 
-#pragma warning disable CS8602
                 DismImageInfoCollection? bootImageInfo = DismManager.GetImageInformation(bootwimPath, (ex) => WriteLogMessage($"Could not get WinPE image info: {ex.Message}"));
-#pragma warning restore CS8602
                 if (bootImageInfo is not null)
                 {
                     // Get the second index then get version
@@ -854,10 +846,8 @@ namespace MicroWin
                 RegistryHelper.UnloadRegistryHive("zDEFAULT");
                 RegistryHelper.UnloadRegistryHive("zNTUSER");
 
-#pragma warning disable CS8604
                 if (Directory.Exists(bootDriverPath))
                     DriverInstallHelper.InstallDrivers(AppState.ScratchPath, bootDriverPath, (message) => WriteLogMessage(message));
-#pragma warning restore CS8604
 
                 if (AppState.UseUEFICA23Bins)
                 {
@@ -893,7 +883,7 @@ namespace MicroWin
                 UpdateOverallStatus("Generating ISO file...");
                 UpdateOverallProgressBar(90);
                 UpdateCurrentStatus("Generating ISO file...");
-#pragma warning disable CS8604
+
                 // If the ISO file already exists then we keep trying to delete it until it succeeds.
                 if (File.Exists(AppState.SaveISO))
                 {
@@ -916,7 +906,6 @@ namespace MicroWin
                     } while (!success);
                 }
                 OscdimgUtilities.CheckAndInvokeOscdimgBinaries((p) => WriteLogMessage(p), AppState.UseUEFICA23Bins);
-#pragma warning restore CS8604
 
                 UpdateOverallStatus("Finishing up...");
                 UpdateOverallProgressBar(95);
@@ -970,6 +959,10 @@ namespace MicroWin
             BusyCannotClose = false;
             WindowHelper.DisplayNotificationBalloon(ToolTipIcon.Info, "ISO file creation results", "Your ISO file has been successfully created.");
             ChangePage(WizardPage.Page.FinishPage);
+
+#pragma warning restore CS8600
+#pragma warning restore CS8602
+#pragma warning restore CS8604
         }
 
         private void lnkUseDT_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
