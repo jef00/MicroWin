@@ -64,10 +64,12 @@ namespace MicroWin.functions.dism
                 {
                     curOpReporter.Invoke($"Removing package {packageToRemove}...");
                     pbReporter.Invoke((int)(((double)idx / packagesToRemove.ToList().Count) * 100));
+
                     // we have this because the API throws an exception on removal error
                     try
                     {
                         DismApi.RemovePackageByName(session, packageToRemove);
+                        logWriter.Invoke($"Package {packageToRemove} was successfully removed.");
                     }
                     catch (Exception ex)
                     {

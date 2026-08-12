@@ -274,10 +274,10 @@
             // DriverExportCombo
             // 
             DriverExportCombo.FormattingEnabled = true;
-            DriverExportCombo.Items.AddRange(new object[] { "Don't export drivers", "Export essential drivers (SCSI Adapters/Storage Controllers)", "Export all drivers" });
+            DriverExportCombo.Items.AddRange(new object[] { "Don't export drivers", "Export essential drivers (Storage Controllers and Network Adapters)", "Export all drivers" });
             DriverExportCombo.Location = new Point(83, 206);
             DriverExportCombo.Name = "DriverExportCombo";
-            DriverExportCombo.Size = new Size(374, 23);
+            DriverExportCombo.Size = new Size(412, 23);
             DriverExportCombo.TabIndex = 9;
             DriverExportCombo.SelectedIndexChanged += DriverExportCombo_SelectedIndexChanged;
             // 
@@ -652,6 +652,7 @@
             logTB.BorderStyle = BorderStyle.None;
             logTB.Font = new Font("Courier New", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             logTB.Location = new Point(99, 128);
+            logTB.MaxLength = int.MaxValue;
             logTB.Multiline = true;
             logTB.Name = "logTB";
             logTB.ReadOnly = true;

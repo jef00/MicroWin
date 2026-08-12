@@ -60,6 +60,7 @@ namespace MicroWin.functions.dism
                     {
 #pragma warning disable CS8625
                         DismApi.DisableFeature(session, featureToDisable, null, true);
+                        logWriter.Invoke($"Feature {featureToDisable} was successfully disabled.");
 #pragma warning restore CS8625
                     }
                     catch (Exception ex)

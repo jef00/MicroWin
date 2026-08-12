@@ -176,8 +176,6 @@ namespace MicroWin
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            Text = $"MicroWin .NET ({swStatus} {appVer})";
-
             string disclaimerMessage = $"Thank you for trying this {swStatus} release of MicroWin .NET.\n\n" +
                 $"Because this is a prerelease version of a rewrite of the original PowerShell version, bugs may happen. We expect improvements in quality " +
                 $"as time goes on, but that can be done with your help. Report the bugs over on the GitHub repository.\n\n" +
@@ -533,7 +531,7 @@ namespace MicroWin
   / /\/\ \| || (__ | |   | (_) | \  /\  / | || | | |
   \/    \/|_| \___||_|    \___/   \/  \/  |_||_| |_|
 
-              MicroWin .NET ({swStatus} {appVer})
+
 
 """;
 
