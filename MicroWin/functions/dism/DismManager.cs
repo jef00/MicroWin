@@ -305,7 +305,7 @@ namespace MicroWin.functions.dism
             if (imageInfo is null || (sourceIndex < 1 || sourceIndex > imageInfo.Count))
                 return false;
 
-            return RunDismProcess($"/english /export-image /sourceimagefile=\"{sourceImage}\" /sourceindex={sourceIndex} /destinationimagefile=\"{destinationImage}\" /compress={compressionType}", actionReporter) == 0;
+            return RunDismProcess($"/english /export-image /sourceimagefile:\"{sourceImage}\" /sourceindex:{sourceIndex} /destinationimagefile:\"{destinationImage}\" /compress:{compressionType}", actionReporter) == 0;
         }
 
         public static bool CleanupImage(string mountPath, Action<int> progress, Action<string?> logMessage) {

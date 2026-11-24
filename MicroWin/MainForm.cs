@@ -900,11 +900,31 @@ namespace MicroWin
 
                 UpdateOverallProgressBar(50);
 
-                // We don't really need to do this if we only have 1 image.
-                if (imageInfo.Count > 1)
+                // Export only the selected edition with recovery (LZMS solid) compression to install.esd. This is the format
+                // Microsoft uses for its own media and is roughly 25-35% smaller than a maximum-compressed WIM.
+                string exportedEsdFile = Path.Combine(AppState.ScratchPath.TrimEnd('\\'), "install2.esd");
+                string finalEsdPath = Path.Combine(AppState.MountPath, "sources", "install.esd");
+                UpdateCurrentStatus("Exporting install image (recovery compression, this takes a while)...");
+                if (DismManager.ExportImage(installwimPath, AppState.SelectedImageIndex, exportedEsdFile, "recovery", (p) => WriteLogMessage(p)))
                 {
+                    try
+                    {
+                        UpdateCurrentStatus("Instating exported image...");
+                        File.Move(exportedEsdFile, finalEsdPath, true);
+                        if (!installwimPath.Equals(finalEsdPath, StringComparison.OrdinalIgnoreCase) && File.Exists(installwimPath))
+                            File.Delete(installwimPath);
+                        installwimPath = finalEsdPath;
+                    }
+                    catch (Exception ex)
+                    {
+                        WriteLogMessage($"Could not instate the recovery-compressed image: {ex.Message}");
+                    }
+                }
+                else if (imageInfo.Count > 1)
+                {
+                    // Fall back to the original behavior: keep a maximum-compressed WIM with only the selected edition
+                    WriteLogMessage("Recovery compression failed. Falling back to maximum compression...");
                     string exportedWimFile = $"{AppState.ScratchPath.TrimEnd("\\")}\\install2.wim";
-                    UpdateCurrentStatus("Exporting install image...");
                     if (DismManager.ExportImage(installwimPath, AppState.SelectedImageIndex, exportedWimFile, "max", (p) => WriteLogMessage(p)))
                     {
                         try
