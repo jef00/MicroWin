@@ -19,18 +19,14 @@ namespace MicroWin.functions.dism
                 "Store",
                 "Notepad",
                 "Printing",
-                "YourPhone",
-                "Xbox",
                 "WindowsTerminal",
                 "Calculator",
                 "Photos",
                 "VCLibs",
                 "Paint",
-                "Gaming",
                 "Extension",
                 "SecHealthUI",
-                "ScreenSketch",
-                "CrossDevice"
+                "ScreenSketch"
             ];
 
         public override void RunTask(Action<int> pbReporter, Action<string> curOpReporter, Action<string> logWriter)
